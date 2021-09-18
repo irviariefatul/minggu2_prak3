@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-
+use App\Http\Controllers\SaranaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,42 +20,32 @@ Route::get('/', [PageController::class,'index']);
 // Halaman Program Studi
 Route::prefix('/prodi')->group(function(){
     Route::get('/manajemen-informatika', function(){
-        echo "Program studi Manajemen Informatika merupakan jenjang studi DIII";
+        return view('mi');
     });
 
     Route::get('/teknik-informatika', function(){
-        echo "Program studi Teknik Informatika merupakan jenjang studi DIV";
+        return view('ti');
     });
 });
 
 // Halaman News
-Route::get('/news/{id}', function($id){
-    return 'News dengan ID '.$id;
-});
+Route::get('/news/{id}', [PageController::class,'news']);
 
 // Halaman Saran
 Route::prefix('/sarana')->group(function(){
-    Route::get('/perkantoran', function(){
-        echo "Sarana Dalam Kategori Perkantoran";
-    });
+    Route::get('/perkantoran', [SaranaController::class, 'perkantoran']);
 
-    Route::get('/laboratorium', function(){
-        echo "Sarana Dalam Kategori Laboratorium";
-    });
+    Route::get('/laboratorium', [SaranaController::class, 'laboratorium']);
 
-    Route::get('/kelas', function(){
-        echo "Sarana Dalam Kategori Kelas";
-    });
+    Route::get('/kelas', [SaranaController::class, 'kelas']);
 
-    Route::get('/lainnya', function(){
-        echo "Sarana Lainnya...";
-    });
+    Route::get('/lainnya', [SaranaController::class, 'lainnya']);
 });
 
 // Halalam About Us
 Route::get('/about-us', [PageController::class,'about']);
 
 //Halaman Comment
-Route::get('/komen/{pesan}/{nama?}', function($pesan, $nama='Anonim'){
-    return 'Comment Oleh '.$nama.' : '.$pesan;
+Route::get('/komen/{pesan}/{nama?}', function($pesan, $nama ='Anonim'){
+    return view('comment', ['nama' => $nama , 'pesan' => $pesan]);
 });
