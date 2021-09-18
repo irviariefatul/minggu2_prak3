@@ -7,10 +7,14 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
     public function index(){
-        return 'Selamat Datang Di Halaman Awal Website';
+        return view('home');
     }
     
     public function about(){
-        return 'Website oleh Irvi Ariefatul Julia Putri';
+       return view('about-us');
+    }
+
+    public function news($id){
+        return view('news', ['id' => $id]);
     }
 }
